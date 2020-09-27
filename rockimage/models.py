@@ -1,4 +1,5 @@
 from sqlalchemy import Column, String
+from sqlalchemy.sql import text
 from sqlalchemy.dialects.postgresql import UUID
 
 from rockimage.db import Base

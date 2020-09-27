@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-
+from typing import Optional, List
 import sqlalchemy as sa
 
 from rockimage import config, db, models
@@ -18,7 +18,7 @@ class Repository(ABC):
         pass
 
     @abstractmethod
-    def get_images() -> List[Image]:
+    def get_images() -> List[ImageRecord]:
         pass
 
 

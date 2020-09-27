@@ -10,3 +10,4 @@ engine = create_engine(DATABASE_URL)
 session = scoped_session(sessionmaker(bind=engine))
 
 Base = declarative_base()
+
