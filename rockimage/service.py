@@ -9,3 +9,8 @@ def get_image(uuid: str) -> dict:
     if not image:
         raise NotFound()
     return asdict(image)
+
+
+def list_images() -> [dict]:
+    images = repository.get_images()
+    return [asdict(image) for image in images]

@@ -17,3 +17,8 @@ if config.ENABLE_API:
     def list_images():
         images = service.list_images()
         return jsonify(images), 200
+
+    @app.route("/images/<uuid:str>")
+    def get_image(uuid: str):
+        image = service.get_image(uuid)
+        return jsonify(image), 200
