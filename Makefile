@@ -1,0 +1,4 @@
+
+
+migrate:
+	alembic
