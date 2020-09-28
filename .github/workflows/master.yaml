@@ -26,13 +26,13 @@ jobs:
         run: gcloud auth configure-docker
 
       - name: Build image
-        run: docker build -t ${{ secrets.IMAGE_TAG }}:${{ github.sha }} .
+        run: docker build -t ${{ secrets.GCLOUD_PROJECT_ID }}/${{ secrets.IMAGE_TAG }}:${{ github.sha }} .
 
-      - name: Push  image
-        run: docker push ${{ secrets.IMAGE_TAG }}:${{ github.sha }}
+      - name: Push image
+        run: docker push ${{ secrets.GCLOUD_PROJECT_ID }}/${{ secrets.IMAGE_TAG }}:${{ github.sha }}
 
       - name: Deploy to Cloud Run
         run: >
           gcloud beta run deploy ${{ secrets.CLOUD_RUN_SERVICE }}-integration
-          --image ${{ secrets.IMAGE_TAG }}:${{ github.sha }}
+          --image ${{ secrets.GCLOUD_PROJECT_ID }}/${{ secrets.IMAGE_TAG }}:${{ github.sha }}
           --service-account ${{ secrets.SERVICE_ACCOUNT }}
