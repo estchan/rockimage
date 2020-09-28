@@ -1,3 +1,4 @@
 FROM tiangolo/meinheld-gunicorn-flask:python3.7
 
-COPY ./rockimage /app
+COPY ./ /app
+COPY ./app.py /app/main.py
