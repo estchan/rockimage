@@ -33,6 +33,6 @@ jobs:
 
       - name: Deploy to Cloud Run
         run: >
-          gcloud beta run deploy ${{ secrets.CLOUD_RUN_SERVICE }}-integration
+          gcloud run deploy ${{ secrets.CLOUD_RUN_SERVICE }}-integration
           --image ${{ secrets.GCLOUD_PROJECT_ID }}/${{ secrets.IMAGE_TAG }}:${{ github.sha }}
           --service-account ${{ secrets.SERVICE_ACCOUNT }}
