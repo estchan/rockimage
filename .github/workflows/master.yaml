@@ -28,7 +28,7 @@ jobs:
       - name: Build image
         run: docker build -t ${{ secrets.IMAGE_TAG }}:${{ github.sha }} .
 
-      - name: Push image
+      - name: Push  image
         run: docker push ${{ secrets.IMAGE_TAG }}:${{ github.sha }}
 
       - name: Deploy to Cloud Run
