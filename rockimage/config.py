@@ -1,5 +1,6 @@
-from typing import Any, Optional
 import os
+from typing import Any, Optional
+
 
 def config(key: str, cast: Optional[Any] = None, default: Optional[Any] = None) -> Any:
     value = os.getenv(key, default)
@@ -7,5 +8,8 @@ def config(key: str, cast: Optional[Any] = None, default: Optional[Any] = None) 
         return cast(value)
     return value
 
-ENABLE_API = config("ENABLE_API", default=False, cast=bool)
+
+ENVIRONMENT = config("ENVIRONMENT", default="local", cast=str)
+ENABLE_API = config("ENABLE_API", default=ENVIRONMENT is "local", cast=bool)
 DATABASE_URL = config("DATABASE_URL", default="postgresql://localhost/rockimage")
+STORAGE_BUCKET = config("STORAGE_BUCKET", default="rockimage-storage")
