@@ -22,6 +22,9 @@ jobs:
           version: '274.0.1'
           service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
 
+      - name: Install alembic
+        run: pip install alembic
+
       - name: Configure Docker
         run: gcloud auth configure-docker
 
