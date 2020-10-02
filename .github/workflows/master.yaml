@@ -31,8 +31,18 @@ jobs:
       - name: Push image
         run: docker push ${{ secrets.GCLOUD_PROJECT_ID }}/${{ secrets.IMAGE_TAG }}:${{ github.sha }}
 
-      - name: Deploy to Cloud Run
-        run: >
-          gcloud run deploy ${{ secrets.CLOUD_RUN_SERVICE }}-integration
-          --image ${{ secrets.GCLOUD_PROJECT_ID }}/${{ secrets.IMAGE_TAG }}:${{ github.sha }}
-          --service-account ${{ secrets.SERVICE_ACCOUNT }}
+      - name: Run Cloud SQL Proxy
+        run: |
+          if ! [ -x "$(command -v cloud_sql_proxy)" ]; then
+            echo 'Cloud SQL Proxy not installed. Installing.' >&2
+            wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
+            sudo install cloud_sql_proxy /usr/bin
+          else
+            echo 'Cloud SQL Proxy already installed'
+            fi
+
+      # - name: Deploy to Cloud Run
+      #   run: >
+      #     gcloud run deploy ${{ secrets.CLOUD_RUN_SERVICE }}-integration
+      #     --image ${{ secrets.GCLOUD_PROJECT_ID }}/${{ secrets.IMAGE_TAG }}:${{ github.sha }}
+      #     --service-account ${{ secrets.SERVICE_ACCOUNT }}
