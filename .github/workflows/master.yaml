@@ -41,6 +41,25 @@ jobs:
             echo 'Cloud SQL Proxy already installed'
             fi
 
+      - name: Start SQL Proxy
+        run: |
+          echo 'Starting SQL Proxy'
+          cloud_sql_proxy -instances=${{ secrets.CLOUD_SQL_INSTANCE_NAME }}=tcp:5433 & sleep 2
+
+          echo 'Running migrations'
+          DATABASE_URL="postgresql://${{ secrets.DATABASE_USER }}:${{ secrets.DATABASE_PASSWORD }}@localhost:5433/${{ secrets.DATABASE_NAME }}" alembic upgrade head
+
+      - name: Stop Cloud SQL Proxy
+        run: |
+          echo 'Stopping SQL proxy'
+          PID=$(ps aux | grep -v grep | grep cloud_sql_proxy | awk '{print $2}')
+          if [ -n "$PID" ]; then
+            echo "Killing $PID"
+            kill -9 $PID
+          else
+            echo "No SQL proxy to stop"
+          fi
+
       # - name: Deploy to Cloud Run
       #   run: >
       #     gcloud run deploy ${{ secrets.CLOUD_RUN_SERVICE }}-integration
