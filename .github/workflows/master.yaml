@@ -25,6 +25,7 @@ jobs:
       - name: Install alembic
         run: |
           pip install alembic
+          pip show alembic
           alembic --version
 
       # - name: Configure Docker
